@@ -9,7 +9,7 @@ solutions_bp = Blueprint('solutions', __name__)
 # ==========================================
 # 🔑 API KEY
 # ==========================================
-GENAI_API_KEY = "AIzaSyCW0PYacH7xPsAO0PJ9KjNmr23SgNo3T2g"
+GENAI_API_KEY = "XXXXX"
 genai.configure(api_key=GENAI_API_KEY)
 
 def ask_ai_doctor(disease_name):

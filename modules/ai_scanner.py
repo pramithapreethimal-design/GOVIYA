@@ -56,10 +56,7 @@ def model_predict(img_path, model, class_list):
     # 2. Convert to Array
     x = image.img_to_array(img)
     
-    # 🛑 THE FIX: We removed the division by 255.0
-    # Many models (like Teachable Machine or standard Transfer Learning) 
-    # prefer raw pixel values (0-255) instead of normalized (0-1).
-    # x = x / 255.0  <-- COMMENTED OUT TO FIX "BLIND AI" ISSUE
+    
     
     x = np.expand_dims(x, axis=0)
 
