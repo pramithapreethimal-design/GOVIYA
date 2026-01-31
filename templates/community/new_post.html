@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h4>Start a Discussion</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label>Title</label>
+                    <input type="text" name="title" class="form-control" value="{{ title }}" required>
+                </div>
+                <div class="mb-3">
+                    <label>Details</label>
+                    <textarea name="content" class="form-control" rows="5" required>{{ content }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Post to Community</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+/* --- 1. FONTS & VARIABLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-green: #2ecc71;
+    --dark-green: #27ae60;
+    --accent-yellow: #f1c40f;
+    --dark-text: #2c3e50;
+    --light-bg: #f8f9fa;
+    --glass-bg: rgba(255, 255, 255, 0.95);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #eff5f0; /* Very light green tint */
+    color: var(--dark-text);
+}
+
+/* --- 2. NAVBAR --- */
+.navbar {
+    background: linear-gradient(135deg, var(--dark-green), var(--primary-green)) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+}
+
+/* --- 3. CARDS (The Glass Look) --- */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Moves up slightly */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    border-bottom: none;
+    font-weight: 600;
+}
+
+/* --- 4. BUTTONS --- */
+.btn {
+    border-radius: 50px; /* Pill shape */
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--dark-green);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--primary-green);
+    transform: scale(1.05);
+}
+
+.btn-warning {
+    background: var(--accent-yellow);
+    color: var(--dark-text);
+    border: none;
+}
+
+/* --- 5. HERO SECTION (For Home Page) --- */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 120px 0;
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+/* --- 6. FORMS --- */
+.form-control, .form-select {
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #e1e1e1;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.25);
+    border-color: var(--primary-green);
+}

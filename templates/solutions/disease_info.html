@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Treatment - {{ disease.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            
+            <div class="card shadow-lg border-danger mb-4">
+                <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">⚠ Disease Identified: {{ disease.name }}</h3>
+                    
+                    {% if "AI" in disease.source %}
+                        <span class="badge bg-primary border border-light shadow-sm">
+                            <i class="bi bi-robot"></i> {{ disease.source }}
+                        </span>
+                    {% else %}
+                        <span class="badge bg-success border border-light shadow-sm">
+                            <i class="bi bi-database-check"></i> {{ disease.source }}
+                        </span>
+                    {% endif %}
+                </div>
+                
+                <div class="card-body p-4">
+                    
+                    <div class="mb-4">
+                        <h4 class="text-success mb-3">💊 Select Treatment Type</h4>
+                        
+                        <ul class="nav nav-tabs" id="treatmentTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active fw-bold text-danger" id="chemical-tab" data-bs-toggle="tab" data-bs-target="#chemical" type="button" role="tab">
+                                    🧪 Chemical (Fast)
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-bold text-success" id="organic-tab" data-bs-toggle="tab" data-bs-target="#organic" type="button" role="tab">
+                                    🌿 Organic (Eco)
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content border border-top-0 p-4 bg-white rounded-bottom" id="treatmentTabContent">
+                            <div class="tab-pane fade show active" id="chemical" role="tabpanel">
+                                <h5 class="text-danger">Recommended Fungicides</h5>
+                                <div class="fs-5 text-dark">
+                                    {{ disease.chemical | safe }}
+                                </div>
+                                <div class="alert alert-info mt-3 py-2">
+                                    <i class="bi bi-info-circle-fill"></i> <small>Always wear a mask and protective gear when spraying chemicals.</small>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="organic" role="tabpanel">
+                                <h5 class="text-success">Traditional Methods</h5>
+                                <div class="fs-5 text-dark">
+                                    {{ disease.organic | safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="fs-2 me-2">🛡️</span>
+                            <h4 class="text-primary mb-0">Prevention Methods</h4>
+                        </div>
+                        <div class="card bg-light border-0">
+                            <div class="card-body fs-5">
+                                {{ disease.prevention | safe }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        
+                        <a href="{{ url_for('community.new_post', title='Help needed for ' + disease.name, content='My crop has ' + disease.name + '. Does anyone know a good local remedy?') }}" 
+                           class="btn btn-warning text-dark fw-bold shadow-sm">
+                           💬 Discuss with Farmers
+                        </a>
+
+                        <a href="{{ url_for('officers.list_officers') }}" class="btn btn-primary fw-bold shadow-sm">
+                           📞 Contact Agriculture Officer
+                        </a>
+                        
+                        <a href="{{ url_for('home') }}" class="btn btn-outline-secondary">Back Home</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

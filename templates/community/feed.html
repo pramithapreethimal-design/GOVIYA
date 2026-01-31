@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🚜 Farmer Community</h2>
+        <a href="{{ url_for('community.new_post') }}" class="btn btn-success">+ Ask Question</a>
+    </div>
+
+    {% for post in posts %}
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{{ url_for('community.view_post', post_id=post[0]) }}" class="text-decoration-none text-dark">{{ post[1] }}</a></h5>
+            <p class="card-text text-muted">{{ post[2][:100] }}...</p>
+            <small class="text-secondary">Posted by <strong>{{ post[3] }}</strong> on {{ post[4] }}</small>
+            <a href="{{ url_for('community.view_post', post_id=post[0]) }}" class="btn btn-sm btn-outline-primary float-end">View Discussion</a>
+        </div>
+    </div>
+    {% else %}
+        <p>No discussions yet. Be the first to post!</p>
+    {% endfor %}
+</div>
+{% endblock %}

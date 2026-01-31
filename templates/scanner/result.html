@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Scanner - GOVIYA AI{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                
+                <div class="card-header bg-success text-white text-center py-4">
+                    <h2 class="mb-0 fw-bold"><i class="bi bi-camera-fill me-2"></i> AI Crop Scanner</h2>
+                    <p class="mb-0 opacity-75">Dual-Model Disease Detection System</p>
+                </div>
+                
+                <div class="card-body p-5">
+                    
+                    <form action="{{ url_for('scanner.scan_crop') }}" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-success">Step 1: Select Crop Type</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-tree"></i></span>
+                                <select class="form-select form-select-lg" name="crop" required>
+                                    <option value="" selected disabled>Choose your crop...</option>
+                                    <option value="paddy">🌾 Paddy (Rice)</option>
+                                    <option value="plant">🍅 Other Plants (Tomato, Potato, etc.)</option>
+                                </select>
+                            </div>
+                            <div class="form-text">Selecting the correct crop loads the specialized AI model.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="fileInput" class="form-label fw-bold text-success">Step 2: Upload Leaf Photo</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-image"></i></span>
+                                <input class="form-control form-control-lg" type="file" name="image" id="fileInput" required>
+                            </div>
+                            <div class="form-text">Supported formats: JPG, PNG, JPEG</div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5">
+                            <button type="submit" class="btn btn-success btn-lg shadow-sm hover-effect">
+                                <i class="bi bi-search me-2"></i> Analyze Health
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{{ url_for('home') }}" class="text-muted text-decoration-none">
+                    <i class="bi bi-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

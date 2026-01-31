@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>📞 Government Agriculture Officers</h2>
+            <p class="text-muted">Find an officer in your district for expert advice.</p>
+        </div>
+        
+        <div class="col-md-4">
+            <form method="GET" class="d-flex">
+                <select name="district" class="form-select me-2">
+                    <option value="">All Districts</option>
+                    {% for district in districts %}
+                        <option value="{{ district }}" {% if district == selected_district %}selected{% endif %}>{{ district }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-success">Filter</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for officer in officers %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100 border-success">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <span class="display-4">👨‍💼</span>
+                    </div>
+                    <h5 class="card-title">{{ officer[1] }}</h5> <span class="badge bg-success mb-2">{{ officer[2] }} District</span> <ul class="list-group list-group-flush text-start mt-3">
+                        <li class="list-group-item">📞 <strong>Phone:</strong> {{ officer[3] }}</li>
+                        <li class="list-group-item">✉️ <strong>Email:</strong> {{ officer[4] }}</li>
+                    </ul>
+                    
+                    <div class="mt-3">
+                        <a href="tel:{{ officer[3] }}" class="btn btn-outline-success btn-sm">Call Now</a>
+                        <a href="mailto:{{ officer[4] }}" class="btn btn-outline-primary btn-sm">Send Email</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="col-12 text-center">
+                <div class="alert alert-warning">No officers found for this district.</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

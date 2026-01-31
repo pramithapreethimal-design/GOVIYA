@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="hero-section text-white">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3">Smart Farming, Better Harvests</h1>
+        <p class="lead mb-4">Identify diseases instantly using AI and get expert local solutions.</p>
+        
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('scanner.scan_crop') }}" class="btn btn-primary btn-lg px-5 shadow-lg">
+                <i class="bi bi-camera-fill me-2"></i> Start Scanning
+            </a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-light btn-lg px-5">
+                Join Community
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 p-4">
+                <div class="card-body">
+                    <div class="text-success mb-3">
+                        <i class="bi bi-qr-code-scan" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 class="card-title fw-bold">AI Diagnosis</h4>
+                    <p class="card-text text-muted">Upload a photo of your paddy or plants. Our AI detects diseases with 95% accuracy in seconds.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 p-4">
+                <div class="card-body">
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-prescription2" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 class="card-title fw-bold">Local Solutions</h4>
+                    <p class="card-text text-muted">Get chemical and organic treatments available in Sri Lankan shops (e.g., Antracol, Neem Oil).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 p-4">
+                <div class="card-body">
+                    <div class="text-primary mb-3">
+                        <i class="bi bi-people-fill" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 class="card-title fw-bold">Farmer Support</h4>
+                    <p class="card-text text-muted">Connect with government officers in your district or discuss issues with the farmer community.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
