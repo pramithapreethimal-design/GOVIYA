@@ -59,4 +59,4 @@ if __name__ == '__main__':
         
         app.config['MYSQL_SSL'] = {'ssl_mode': 'REQUIRED'}
         
-        app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Aiven provides this
+        app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  
