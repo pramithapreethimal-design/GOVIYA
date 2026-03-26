@@ -58,3 +58,5 @@ if __name__ == '__main__':
         app.run(host='0.0.0.0', port=5000, debug=False)
         
         app.config['MYSQL_SSL'] = {'ssl_mode': 'REQUIRED'}
+        
+        app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Aiven provides this
