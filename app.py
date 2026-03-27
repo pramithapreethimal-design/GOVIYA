@@ -32,10 +32,10 @@ UPLOAD_FOLDER = os.path.join("static", "uploads")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# 🔧 Initialize Extensions
-mysql.init_app(app)
-login_manager.init_app(app)
+from extensions import mysql, login_manager, init_app  
+init_app(app)  
 login_manager.login_view = 'auth.login' 
+
 
 # 🧩 Register Blueprints
 app.register_blueprint(auth_bp)
@@ -67,3 +67,17 @@ if __name__ == '__main__':
         print("💡 Tip: Set DEMO_MODE=True for LinkedIn demo (optional)")
         
         app.run(host='0.0.0.0', port=5000, debug=False)
+        
+        
+        
+        # 🔧 DEBUG: Test database connection
+@app.route('/test-db')
+def test_db():
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT 1")
+        result = cursor.fetchone()
+        cursor.close()
+        return f"✅ Database connected! Result: {result}"
+    except Exception as e:
+        return f"❌ Connection Error: {type(e).__name__}: {str(e)}"
