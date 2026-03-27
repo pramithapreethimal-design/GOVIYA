@@ -16,61 +16,82 @@ class User(UserMixin):
 # --- User Loader (Reloads user from session) ---
 @login_manager.user_loader
 def load_user(user_id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM farmers WHERE id = %s", (user_id,))
-    user_data = cur.fetchone()
-    cur.close()
-    if user_data:
-        # id=0, name=1, email=2, district=4 based on your table order
-        return User(id=user_data[0], name=user_data[1], email=user_data[2], district=user_data[4])
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT id, name, email, district FROM farmers WHERE id = %s", (user_id,))
+        user_data = cur.fetchone()
+        cur.close()
+        if user_data:
+            return User(id=user_data[0], name=user_data[1], email=user_data[2], district=user_data[3])
+    except Exception as e:
+        print(f"⚠️ load_user error: {e}")
     return None
 
 # --- Routes ---
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
-        district = request.form['district']
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        district = request.form.get('district')
+        
+        if not all([name, email, password, district]):
+            flash("All fields are required", "warning")
+            return redirect(url_for('auth.register'))
         
         hashed_pw = generate_password_hash(password, method='pbkdf2:sha256')
 
-        cur = mysql.connection.cursor()
+        cur = None
         try:
+            cur = mysql.connection.cursor()
             cur.execute("INSERT INTO farmers (name, email, password_hash, district) VALUES (%s, %s, %s, %s)", 
                         (name, email, hashed_pw, district))
             mysql.connection.commit()
             flash("Registration Successful! Please Login.", "success")
             return redirect(url_for('auth.login'))
         except Exception as e:
-            flash(f"Error: {e}", "danger")
+            print(f"❌ Register error: {e}")
+            flash("Registration failed. Please try again.", "danger")
         finally:
-            cur.close()
+            if cur:
+                cur.close()
             
     return render_template("auth/register.html")
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
 
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM farmers WHERE email = %s", [email])
-        user_data = cur.fetchone()
-        cur.close()
+        if not email or not password:
+            flash("Email and password are required", "warning")
+            return redirect(url_for('auth.login'))
 
-        if user_data:
-            # user_data[3] is password_hash
-            if check_password_hash(user_data[3], password):
+        cur = None
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT id, name, email, password_hash, district FROM farmers WHERE email = %s", (email,))
+            user_data = cur.fetchone()
+            cur.close()
+
+            if user_data and check_password_hash(user_data[3], password):
                 user = User(id=user_data[0], name=user_data[1], email=user_data[2], district=user_data[4])
                 login_user(user)
-                return redirect(url_for('home')) # Redirects to Home after login
-            else:
+                flash(f"Welcome back, {user_data[1]}!", "success")
+                return redirect(url_for('home'))
+            elif user_data:
                 flash("Incorrect Password", "danger")
-        else:
-            flash("Email not found", "danger")
+            else:
+                flash("Email not found", "danger")
+                
+        except Exception as e:
+            print(f"❌ Login error: {e}")
+            flash("Login failed. Please try again.", "danger")
+        finally:
+            if cur:
+                cur.close()
 
     return render_template("auth/login.html")
 
